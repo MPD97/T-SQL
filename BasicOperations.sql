@@ -21,4 +21,22 @@ begin
 end
 else begin
 	print '>False'
-end
+end;
+
+--STORED PROCEDURE
+CREATE OR ALTER PROCEDURE sp_example
+(
+	@para1 INT ,
+	@para2 INT OUTPUT
+)
+AS
+BEGIN
+	SELECT @para2 = MAX(customer_id) FROM [BikeStores].[sales].[customers]
+END
+
+--EXECUTE SP
+declare @result INT
+
+EXEC sp_example 10, @result OUTPUT
+
+PRINT 'SP OUTPUT PARA: ' + str(@result)
