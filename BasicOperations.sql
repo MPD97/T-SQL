@@ -60,3 +60,47 @@ DELETE FROM [sales].[customers] WHERE sales.customers.customer_id % 2 = 1
 --COMMIT TRANSACTION T2
 --COMMIT TRANSACTION T1
 ROLLBACK
+
+--FUNCTIONS
+CREATE FUNCTION AddNumbers 
+(
+	@a INT,
+	@b INT
+)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @result INT;
+	SELECT @result = @a + @b;
+	return @result;
+END
+
+PRINT 'Result: ' + str( dbo.AddNumbers(3,12));
+
+
+CREATE FUNCTION Hello
+(
+	@name VARCHAR(50)
+)
+RETURNS VARCHAR(60)
+AS
+BEGIN
+	RETURN 'Hello ' + @name + ' :-)'
+END
+
+PRINT 'Result: ' +  dbo.Hello('Mark');
+
+
+CREATE FUNCTION FStats
+(
+	@cid INT
+)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT [phone],[email] FROM [BikeStores].[sales].[customers]
+	WHERE [customer_id] = @cid
+)
+
+SELECT * FROM  dbo.FStats(23)
