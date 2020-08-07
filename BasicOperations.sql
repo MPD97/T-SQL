@@ -104,3 +104,14 @@ RETURN
 )
 
 SELECT * FROM  dbo.FStats(23)
+
+--VIEWS
+CREATE OR ALTER VIEW Customers_OrderC
+AS
+SELECT [C].[customer_id], [C].[first_name], [C].[last_name], COUNT([O].[order_id]) AS 'Orders Count'
+FROM [BikeStores].[sales].[customers] AS [C]
+INNER JOIN [BikeStores].[sales].[orders] AS [O]
+ON  [C].[customer_id] = [O].[customer_id]
+GROUP BY [C].[customer_id], [C].[first_name], [C].[last_name]
+
+SELECT * FROM Customers_OrderC;
