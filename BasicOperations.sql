@@ -49,3 +49,14 @@ CREATE NONCLUSTERED INDEX ix_Orders_ODSD ON  [BikeStores].[sales].[orders]([orde
 DROP INDEX [sales].[orders].PK__orders__4659622928BAB784
 
 CREATE CLUSTERED INDEX ixc_Orders ON  [BikeStores].[sales].[orders]([order_id],[customer_id])
+
+--TRANSACTIONS
+BEGIN TRANSACTION T1
+DELETE FROM [sales].[customers] WHERE sales.customers.customer_id % 2 = 0
+
+BEGIN TRANSACTION T2
+DELETE FROM [sales].[customers] WHERE sales.customers.customer_id % 2 = 1
+
+--COMMIT TRANSACTION T2
+--COMMIT TRANSACTION T1
+ROLLBACK
