@@ -39,4 +39,13 @@ declare @result INT
 
 EXEC sp_example 10, @result OUTPUT
 
-PRINT 'SP OUTPUT PARA: ' + str(@result)
+PRINT 'SP OUTPUT PARA: ' + str(@result);
+
+--INDEXES
+CREATE NONCLUSTERED INDEX ix_Orders_RD ON  [BikeStores].[sales].[orders](required_date)
+
+CREATE NONCLUSTERED INDEX ix_Orders_ODSD ON  [BikeStores].[sales].[orders]([order_date],[shipped_date])
+
+DROP INDEX [sales].[orders].PK__orders__4659622928BAB784
+
+CREATE CLUSTERED INDEX ixc_Orders ON  [BikeStores].[sales].[orders]([order_id],[customer_id])
